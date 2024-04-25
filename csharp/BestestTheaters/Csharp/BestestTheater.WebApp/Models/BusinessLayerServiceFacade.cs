@@ -1,6 +1,6 @@
 ﻿namespace BestestTheater.WebApp.Models
 {
-    public class ShowService
+    public class BusinessLayerServiceFacade
     {
         private static List<BkngData_3> BookedShows { get; set; } = new();
 

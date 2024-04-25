@@ -6,10 +6,10 @@ namespace BestestTheater.WebApp.Pages
     public class BookModel : PageModel
     {
         private readonly ILogger<BookModel> _logger;
-        private readonly ShowService showService;
+        private readonly BusinessLayerServiceFacade showService;
         public string Message { get; private set; }
 
-        public BookModel(ILogger<BookModel> logger, ShowService showService)
+        public BookModel(ILogger<BookModel> logger, BusinessLayerServiceFacade showService)
         {
             _logger = logger;
             this.showService = showService;

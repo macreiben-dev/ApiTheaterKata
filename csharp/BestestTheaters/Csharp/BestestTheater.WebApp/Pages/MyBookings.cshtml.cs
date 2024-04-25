@@ -5,9 +5,9 @@ namespace BestestTheater.WebApp.Pages
 {
     public class MyBookingsModel : PageModel
     {
-        private readonly ShowService _showService;
+        private readonly BusinessLayerServiceFacade _showService;
 
-        public MyBookingsModel(ShowService showService)
+        public MyBookingsModel(BusinessLayerServiceFacade showService)
         {
             _showService = showService;
         }

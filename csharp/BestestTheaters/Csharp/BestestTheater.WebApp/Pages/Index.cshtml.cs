@@ -6,10 +6,10 @@ namespace BestestTheater.WebApp.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        private readonly ShowService _showService;
+        private readonly BusinessLayerServiceFacade _showService;
         public IEnumerable<Show> Shows { get; private set; }
 
-        public IndexModel(ILogger<IndexModel> logger, ShowService showService)
+        public IndexModel(ILogger<IndexModel> logger, BusinessLayerServiceFacade showService)
         {
             _logger = logger;
             _showService = showService;
