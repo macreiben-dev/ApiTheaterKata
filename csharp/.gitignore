@@ -10,3 +10,4 @@ obj
 *csproj.user
 *sln.user
 dist/
+.idea/
