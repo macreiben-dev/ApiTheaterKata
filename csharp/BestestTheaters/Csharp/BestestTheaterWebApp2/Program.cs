@@ -1,16 +1,9 @@
-using BestestTheater.WebApp.Models;
-using BestTheater.DontTouchMe.Kata;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddScoped<BusinessLayerServiceFacade>();
 
 var app = builder.Build();
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -20,14 +13,13 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
 app.UseRouting();
 
 app.UseAuthorization();
 
 app.MapRazorPages();
-
-// =======
-DatabaseBootstrapper.OnStart();
-// =======
 
 app.Run();
