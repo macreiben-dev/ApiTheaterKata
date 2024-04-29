@@ -2,7 +2,7 @@ using System.Data.SQLite;
 
 namespace BestestTheater.WebApp.Models;
 
-public class BusinessRepository
+public class ShowRepository
 {
     public static List<Show> AllShows()
     {
@@ -32,5 +32,10 @@ public class BusinessRepository
         connection.Close();
 
         return shows.ToList();
+    }
+
+    public static void SaveBooking(BookingInfo bookingInfo)
+    {
+        throw new NotImplementedException();
     }
 }
