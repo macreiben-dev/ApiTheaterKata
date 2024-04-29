@@ -28,6 +28,20 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Mybookings">My Bookings</a>
                         </li>
+
+                        @if (Context.Session.GetString("isLoggedIn") == "true")
+                        {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Logout">Logout</a>
+                        </li>
+                        }
+                        else
+                        {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Login">Login</a>
+                        </li>
+                        }
+                        
                     </ul>
                 </div>
             </div>
