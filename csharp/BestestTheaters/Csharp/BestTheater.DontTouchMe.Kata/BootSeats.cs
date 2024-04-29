@@ -8,6 +8,8 @@ public static class BootSeats
     {
         using var connection = new SQLiteConnection("Data Source=./database/BestestTheater.db");
 
+        connection.Open();
+        
         {
             using var cmd = connection.CreateCommand();
 
@@ -16,27 +18,37 @@ public static class BootSeats
 
             cmd.ExecuteNonQuery();
         }
+        
+        var transation =  connection.BeginTransaction();
 
         foreach (var show in AllShows())
         {
-            using var cmd = connection.CreateCommand();
 
+            using var cmd = connection.CreateCommand();
+            
             for (int i = 0; i < 100; i++)
             {
                 cmd.CommandText = "INSERT INTO seats (seat_number, show_id) VALUES (@seat_number, @show_id)";
-
                 cmd.Parameters.AddWithValue("@seat_number", "A" + i.ToString("D2"));
                 cmd.Parameters.AddWithValue("@show_id", show.Id);
 
                 cmd.ExecuteNonQuery();
             }
+            
+
         }
+        
+        transation.Commit();
+        
+        connection.Close();
     }
 
     private static IEnumerable<Show> AllShows()
     {
         using var connection = new SQLiteConnection("Data Source=./database/BestestTheater.db");
 
+        connection.Open();
+        
         using var cmd = connection.CreateCommand();
 
         cmd.CommandText = "SELECT * FROM shows";

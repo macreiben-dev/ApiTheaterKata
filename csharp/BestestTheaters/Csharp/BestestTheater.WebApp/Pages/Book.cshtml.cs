@@ -5,29 +5,23 @@ namespace BestestTheater.WebApp.Pages
 {
     public class BookModel : PageModel
     {
-        private readonly ILogger<BookModel> _logger;
-        private readonly BusinessLayerServiceFacade showService;
         public string Message { get; private set; }
 
-        public BookModel(ILogger<BookModel> logger, BusinessLayerServiceFacade showService)
-        {
-            _logger = logger;
-            this.showService = showService;
-        }
+        public List<Seat> AllSeats { get; set; }
+        
+        public string? ShowTitle { get; set; } 
 
         public void OnGet()
         {
             var session = HttpContext.Request.Query["sessionId"].First();
-            var sessionId = int.Parse(session);
-            var shows = showService.FetchShows();
-            var showBooked = shows.FirstOrDefault(show => show.Id == sessionId);
-            if (showBooked == null)
-            {
-                Message = "The session you are trying to book does not exist!";
-                return;
-            }
-            Message = $"You booked the session - {showBooked.Title} - of - {showBooked.Date.ToString("yyyy-MM-dd")} -!";
-            showService.Book(showBooked);
+            
+            var id = int.Parse(session);
+            
+            var show = ServiceBuilder.GetService<ShowRepository>().GetShow(id);
+
+            if (show?.Title != null) ShowTitle = show?.Title;
+
+            AllSeats = ServiceBuilder.GetService<SeatRepository>().GetAll(id);
         }
     }
 }

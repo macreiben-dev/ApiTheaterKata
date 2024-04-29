@@ -5,6 +5,30 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Great!</h1>
+    <h1 class="display-4">Available seets for @Model.ShowTitle</h1>
     <p>@Model.Message</p>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Seat Number</th>
+            <th>Book</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var seat in Model.AllSeats)
+        {
+        <tr>
+            <td>@seat.SeatNumber</td>
+            <td>
+                @if (HttpContext.Session.GetString("isLoggedIn") == "true")
+                {
+                <a asp-page="./Book" asp-route-seatId="@seat.Id">Book</a>
+                }
+            </td>
+        </tr>
+        }
+        </tbody>
+    </table>
+    
 </div>

@@ -15,11 +15,30 @@
             return shows;
         }
 
-        private static List<Show> GetAllShows(DateTime date)
+        // =====================================
+        
+        public static List<Show> GetAllShows(DateTime date)
         {
-            return BusinessRepository.AllShows();
+            var allShows = ShowRepository.AllShows();
+
+            var output = new List<Show>();
+            
+            foreach (var show in allShows)
+            {
+                if (show.Date.Day == date.Day && show.Date.Month == date.Month && show.Date.Year == date.Year)
+                    output.Add(show);
+            }
+            
+            return output;
         }
 
+        public static void DoBooking(BookingInfo bookingInfo)
+        {
+            ShowRepository.SaveBooking(bookingInfo);
+        }
+        
+        // =====================================
+        
         public List<BkngData_3> GetMyBookings()
         {
             return BookedShows;

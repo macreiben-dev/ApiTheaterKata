@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<BookingRepository>();
 builder.Services.AddScoped<BusinessLayerServiceFacade>();
 
 // Enable the session on the site
