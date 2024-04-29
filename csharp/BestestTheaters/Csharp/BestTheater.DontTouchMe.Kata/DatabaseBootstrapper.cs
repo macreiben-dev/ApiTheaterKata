@@ -1,5 +1,3 @@
-using System.Data.SQLite;
-
 namespace BestTheater.DontTouchMe.Kata;
 
 public static class DatabaseBootstrapper
@@ -26,5 +24,7 @@ public static class DatabaseBootstrapper
         BootShows.CreateShowAndFeed();
         
         BootBookings.CreateBookingsAndFeed();
+        
+        BootSeats.CreateSeatsAndFeed();
     }
 }
