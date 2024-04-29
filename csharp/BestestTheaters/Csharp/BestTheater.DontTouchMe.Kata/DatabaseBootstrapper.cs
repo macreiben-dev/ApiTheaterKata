@@ -24,5 +24,7 @@ public static class DatabaseBootstrapper
         BootApplicationUser.CreateUsersAndFeed();
 
         BootShows.CreateShowAndFeed();
+        
+        BootBookings.CreateBookingsAndFeed();
     }
 }
