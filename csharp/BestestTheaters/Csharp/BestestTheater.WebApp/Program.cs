@@ -1,4 +1,5 @@
 using BestestTheater.WebApp.Models;
+using BestTheater.DontTouchMe.Kata;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,5 +25,9 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+// =======
+DatabaseBootstrapper.OnStart();
+// =======
 
 app.Run();

@@ -6,4 +6,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="database\" />
+    <Folder Include="Models\Databases\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BestTheater.DontTouchMe.Kata\BestTheater.DontTouchMe.Kata.csproj" />
+  </ItemGroup>
+
 </Project>
