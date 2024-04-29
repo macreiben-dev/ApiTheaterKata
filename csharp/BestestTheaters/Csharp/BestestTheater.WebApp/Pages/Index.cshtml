@@ -14,7 +14,10 @@
         <tr>
             <th>Title</th>
             <th>Session Date</th>
-            <th>Book Session</th>
+            @if (HttpContext.Session.GetString("isLoggedIn") == "true")
+            {
+                <th>Book Session</th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -23,7 +26,12 @@
             <tr>
                 <td>@item.Title</td>
                 <td>@item.Date.ToString("yyyy-MM-dd")</td>
-                <td><a asp-page="./Book" asp-route-sessionId="@item.Id">Book</a></td>
+                <td>
+                    @if (HttpContext.Session.GetString("isLoggedIn") == "true")
+                    {
+                        <a asp-page="./Book" asp-route-sessionId="@item.Id">Book</a>
+                    }
+                </td>
             </tr>
         }
     </tbody>
