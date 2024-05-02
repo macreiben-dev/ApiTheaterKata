@@ -18,11 +18,12 @@ public static class BootShows
 
         for (int i = 1; i <= 50; i++)
         {
+            var now = DateTime.Now;
             var show = new Show
             {
                 Id = i,
                 Title = $"Dummy Show {i}",
-                Date = DateTime.Now.AddDays(random.Next(0, 3)) // Randomly assign a date within the next 3 days
+                Date = now.AddDays(random.Next(0, 3)) // Randomly assign a date within the next 3 days
             };
 
             shows.Add(show);
