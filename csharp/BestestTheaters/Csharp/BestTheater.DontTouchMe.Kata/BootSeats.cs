@@ -1,75 +1,76 @@
 using System.Data.SQLite;
 
-namespace BestTheater.DontTouchMe.Kata;
-
 public static class BootSeats
 {
+    private const string CONNECTION_STRING = "Data Source=./database/BestestTheater.db";
+    private const string CREATE_TABLE =
+        "CREATE TABLE seats (id INTEGER PRIMARY KEY, seat_number TEXT, session_id INTEGER, FOREIGN KEY(session_id) REFERENCES sessions(id))";
+
+    private const string INSERT = "INSERT INTO seats (seat_number, session_id) VALUES (@seat_number, @session_id)";
+
     public static void CreateSeatsAndFeed()
     {
         using var connection = new SQLiteConnection("Data Source=./database/BestestTheater.db");
 
         connection.Open();
-        
+
         {
             using var cmd = connection.CreateCommand();
 
-            cmd.CommandText =
-                "CREATE TABLE seats (id INTEGER PRIMARY KEY, seat_number TEXT, show_id INTEGER, FOREIGN KEY(show_id) REFERENCES shows(id))";
+            cmd.CommandText = CREATE_TABLE;
 
             cmd.ExecuteNonQuery();
         }
-        
-        var transation =  connection.BeginTransaction();
 
-        foreach (var show in AllShows())
+        var transaction = connection.BeginTransaction();
+
+        foreach (var session in AllSessions())
         {
 
             using var cmd = connection.CreateCommand();
-            
+
             for (int i = 0; i < 100; i++)
             {
-                cmd.CommandText = "INSERT INTO seats (seat_number, show_id) VALUES (@seat_number, @show_id)";
+                cmd.CommandText = INSERT;
                 cmd.Parameters.AddWithValue("@seat_number", "A" + i.ToString("D2"));
-                cmd.Parameters.AddWithValue("@show_id", show.Id);
+                cmd.Parameters.AddWithValue("@session_id", session.Id);
 
                 cmd.ExecuteNonQuery();
             }
-            
-
         }
-        
-        transation.Commit();
-        
+
+        transaction.Commit();
+
         connection.Close();
     }
 
-    private static IEnumerable<Show> AllShows()
+    private static IEnumerable<Session> AllSessions()
     {
-        using var connection = new SQLiteConnection("Data Source=./database/BestestTheater.db");
+        using var connection = new SQLiteConnection(CONNECTION_STRING);
 
         connection.Open();
-        
+
         using var cmd = connection.CreateCommand();
 
-        cmd.CommandText = "SELECT * FROM shows";
+        cmd.CommandText = "SELECT Id, show_id, show_datetime FROM sessions";
 
         var reader = cmd.ExecuteReader();
 
-        var shows = new List<Show>();
+        var sessions = new List<Session>();
 
         while (reader.Read())
         {
-            var show = new Show
+            var session = new Session
             {
                 Id = reader.GetInt32(0),
-                Title = reader.GetString(1),
-                Date = reader.GetDateTime(2)
+                ShowId = reader.GetInt32(1),
+                ShowDateTime = reader.GetDateTime(2)
             };
-            shows.Add(show);
+            sessions.Add(session);
         }
 
         connection.Close();
 
-        return shows;
+        return sessions;
     }
 }

@@ -23,7 +23,9 @@ public static class DatabaseBootstrapper
 
         BootShows.CreateShowAndFeed();
         
-        BootBookings.CreateBookingsAndFeed();
+        BootBookings.CreateAndFeed();
+        
+        BootSessions.CreateAndFeed();
         
         BootSeats.CreateSeatsAndFeed();
     }

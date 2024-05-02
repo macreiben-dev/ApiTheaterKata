@@ -42,7 +42,9 @@ public class ShowRepository
 
         using var command = connection.CreateCommand();
 
-        command.CommandText = "SELECT * FROM shows";
+        command.CommandText = @"SELECT sh.id, sh.Title, se.show_datetime
+                                FROM shows sh 
+                                JOIN sessions se ON sh.id = se.show_id";
         
         var reader = command.ExecuteReader();
         

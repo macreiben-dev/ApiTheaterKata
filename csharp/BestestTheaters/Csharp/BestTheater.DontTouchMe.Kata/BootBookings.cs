@@ -2,7 +2,7 @@ namespace BestTheater.DontTouchMe.Kata;
 
 public class BootBookings
 {
-    public static void CreateBookingsAndFeed()
+    public static void CreateAndFeed()
     {
         using var connection = ConnectionFactory.CreateConnection();
         

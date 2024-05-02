@@ -9,38 +9,35 @@ public static class BootShows
         connection.Open();
 
         var cmd = connection.CreateCommand();
-        cmd.CommandText = "CREATE TABLE Shows (Id INTEGER PRIMARY KEY AUTOINCREMENT, Title TEXT, Date TEXT) ";
+        cmd.CommandText = "CREATE TABLE Shows (Id INTEGER PRIMARY KEY AUTOINCREMENT, Title TEXT) ";
 
         cmd.ExecuteNonQuery();
 
         var shows = new List<Show>();
-        var random = new Random();
 
         for (int i = 1; i <= 50; i++)
         {
-            var now = DateTime.Now;
             var show = new Show
             {
                 Id = i,
-                Title = $"Dummy Show {i}",
-                Date = now.AddDays(random.Next(0, 3)) // Randomly assign a date within the next 3 days
+                Title = $"Dummy Show {i}"
             };
 
             shows.Add(show);
         }
 
         {
-            string insertStatement = "INSERT INTO Shows (Date, Title) VALUES ";
+            var transaction = connection.BeginTransaction();
 
-            string values = shows.Aggregate("", (current,
-                        show) => current + $"('{show.Date.ToString("yyyy-MM-dd")}', '{show.Title}'), ")
-                .TrimEnd(',', ' ');
+            foreach (var show in shows)
+            {
+                cmd.CommandText ="INSERT INTO Shows (Title) VALUES (@title)";
+                cmd.Parameters.AddWithValue("@title", show.Title);
 
-            var insertData = connection.CreateCommand();
-
-            insertData.CommandText = insertStatement + values;
-
-            insertData.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
+            }
+            
+            transaction.Commit();
         }
         connection.Close();
     }
